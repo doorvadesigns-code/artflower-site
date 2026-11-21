@@ -1,0 +1,137 @@
+/* Styles for the hand-written runtime in site.js */
+
+/* Header dropdown (reuses Framer's .framer-sfhsjj layout) */
+.af-menu {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  bottom: auto !important;
+}
+.af-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.af-menu a { text-decoration: none; }
+.af-menu a:hover { opacity: 0.6; }
+
+/* Home card hover label + arrow (reuses Framer's positioning classes) */
+.af-pill {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  z-index: 1;
+  pointer-events: none;
+}
+.af-pill p { color: #fff; margin: 0; }
+.af-pill { min-width: 0 !important; }
+.af-arrow { background-color: rgba(255, 255, 255, 0.1); }
+@media (hover: hover) {
+  a:hover > .af-pill { opacity: 1; transform: none; }
+}
+
+/* Cursor dot */
+.af-cursor {
+  position: fixed;
+  top: -7px;
+  left: -7px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.af-cursor.is-on { opacity: 1; }
+
+/* Posters: hover + lightbox */
+.af-poster img { transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+.af-poster > div { transition: opacity 0.35s ease; }
+@media (hover: hover) {
+  .af-poster:hover img { transform: scale(1.03) !important; }
+  .af-poster:hover > div { opacity: 1 !important; }
+}
+
+.af-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(28, 28, 28);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+.af-lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease;
+}
+.af-lightbox img {
+  max-width: min(88vw, 1100px);
+  max-height: 84vh;
+  object-fit: contain;
+  cursor: pointer;
+  user-select: none;
+}
+.af-lightbox button {
+  position: absolute;
+  background: none;
+  border: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font: 300 40px/1 system-ui, sans-serif;
+  padding: 12px 18px;
+  cursor: pointer;
+}
+.af-lightbox button:hover { color: #fff; }
+.af-lb-close { top: 12px; right: 12px; }
+.af-lb-prev { left: 8px; top: 50%; transform: translateY(-50%); }
+.af-lb-next { right: 8px; top: 50%; transform: translateY(-50%); }
+.af-lb-count {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.45);
+  font: 12px/1 "Inter", system-ui, sans-serif;
+  letter-spacing: 0.1em;
+}
+@media (max-width: 809px) {
+  .af-lb-prev, .af-lb-next { display: none; }
+}
+
+/* Organizing the Chaos gallery (static rebuild of a Framer code component) */
+.af-gallery { display: flex; gap: 45px; padding: 16px 13px; }
+.af-gallery-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 52px; }
+.af-gallery-card { border-radius: 8px; overflow: hidden; }
+.af-gallery-card img {
+  width: 100%; height: 100%; display: block; object-fit: cover;
+  transition: transform 620ms cubic-bezier(.22,.61,.36,1), filter 320ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .af-gallery-card:hover img { transform: scale(1.04); filter: brightness(1.06); }
+}
+.af-gallery-2 { display: none; }
+@media (max-width: 1199px) { .af-gallery { gap: 32px; padding: 10px 8px; } .af-gallery-col { gap: 36px; } }
+@media (max-width: 809px) {
+  .af-gallery-3 { display: none; }
+  .af-gallery-2 { display: flex; gap: 23px; padding: 7px 5px; }
+  .af-gallery-2 .af-gallery-col { gap: 25px; }
+}
+
+/* Poster grids switch to one column on phones (Framer did this in JS) */
+@media (max-width: 809px) {
+  [style*="column-count:2"] { column-count: 1 !important; }
+}
